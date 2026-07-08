@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - PrepPilot AI</title>
+  
+  <!-- Modern Typography (Inter Font) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- App Shell Layout -->
+  <div class="app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+        <span>PrepPilot <span class="logo-accent">AI</span></span>
+      </div>
+
+      <nav class="sidebar-menu">
+        <button class="menu-item active" data-target="section-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="menu-item" data-target="section-dsa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          <span>DSA Tracker</span>
+        </button>
+
+        <button class="menu-item" data-target="section-notes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>Notes</span>
+        </button>
+
+        <button class="menu-item" data-target="section-ai">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><circle cx="12" cy="12" r="4"></circle></svg>
+          <span>AI Interview Prep</span>
+        </button>
+
+        <button class="menu-item" data-target="section-profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button id="btn-logout" class="menu-item logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="menu-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top header bar -->
+      <header class="content-header">
+        <div>
+          <h1 id="header-title">Dashboard Overview</h1>
+          <p id="header-subtitle" class="header-subtitle">Welcome back, developer!</p>
+        </div>
+        <div class="user-pill">
+          <div class="user-avatar" id="avatar-letters">PP</div>
+          <div class="user-info">
+            <span class="user-name" id="pill-user-name">Loading...</span>
+            <span class="user-role">Candidate</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Alert Container -->
+      <div id="dashboard-alert" class="dashboard-alert hidden"></div>
+
+      <!-- ================= SECTION: OVERVIEW ================= -->
+      <section id="section-dashboard" class="content-section">
+        <!-- Stats Cards Grid -->
+        <div class="stats-grid">
+          <!-- Total Problems Card -->
+          <div class="stats-card">
+            <div class="stats-card-header">
+              <span class="stats-card-label">DSA Problems Logged</span>
+              <div class="stats-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              </div>
+            </div>
+            <div class="stats-card-body">
+              <span class="stats-number" id="stats-total-problems">0</span>
+              <div class="stats-footer">
+                <span class="stats-subtext" id="stats-solved-percent">0% Completed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem Breakdown Details Card -->
+          <div class="stats-card">
+            <div class="stats-card-header">
+              <span class="stats-card-label">Status Breakdown</span>
+              <div class="stats-icon gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              </div>
+            </div>
+            <div class="stats-card-body">
+              <div class="breakdown-list">
+                <div class="breakdown-item">
+                  <span class="badge status-solved">Solved</span>
+                  <span class="breakdown-count" id="count-solved">0</span>
+                </div>
+                <div class="breakdown-item">
+                  <span class="badge status-attempted">Attempted</span>
+                  <span class="breakdown-count" id="count-attempted">0</span>
+                </div>
+                <div class="breakdown-item">
+                  <span class="badge status-notstarted">Not Started</span>
+                  <span class="breakdown-count" id="count-notstarted">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Revision Notes Card -->
+          <div class="stats-card">
+            <div class="stats-card-header">
+              <span class="stats-card-label">Revision Summaries</span>
+              <div class="stats-icon violet">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+            </div>
+            <div class="stats-card-body">
+              <span class="stats-number" id="stats-total-notes">0</span>
+              <div class="stats-footer">
+                <span class="stats-subtext">Quick-revision notes saved</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Dashboard Layout -->
+        <div class="dashboard-grid">
+          <!-- Left Column: Recents -->
+          <div class="grid-card recent-problems-card">
+            <div class="grid-card-header">
+              <h3 class="grid-card-title">Recently Added DSA Problems</h3>
+              <button class="text-btn nav-trigger-btn" data-target="section-dsa">View All</button>
+            </div>
+            <div class="grid-card-body">
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Difficulty</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-problems-tbody">
+                    <tr>
+                      <td colspan="3" class="text-center text-muted">No problems logged yet.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Quick Action and Profile Card -->
+          <div class="grid-sidebar-col">
+            <!-- Quick Actions -->
+            <div class="grid-card quick-actions-card">
+              <h3 class="grid-card-title">Quick Actions</h3>
+              <div class="action-buttons-stack">
+                <button class="btn btn-primary" onclick="openModal('add-problem-modal')">
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  <span>Add DSA Problem</span>
+                </button>
+                <button class="btn btn-secondary" onclick="openModal('add-note-modal')">
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  <span>Create Study Note</span>
+                </button>
+                <button class="btn btn-accent nav-trigger-btn" data-target="section-ai">
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                  <span>Generate Interview Questions</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Profile Summary Card -->
+            <div class="grid-card profile-summary-card">
+              <h3 class="grid-card-title">Candidate Profile</h3>
+              <div class="profile-card-content">
+                <div class="profile-row">
+                  <span class="profile-label">Name:</span>
+                  <span class="profile-value" id="profile-name">Loading...</span>
+                </div>
+                <div class="profile-row">
+                  <span class="profile-label">Email:</span>
+                  <span class="profile-value" id="profile-email">Loading...</span>
+                </div>
+                <div class="profile-row">
+                  <span class="profile-label">Account Status:</span>
+                  <span class="profile-value badge badge-active">Active Candidate</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION: DSA TRACKER ================= -->
+      <section id="section-dsa" class="content-section hidden">
+        <div class="section-actions-bar">
+          <div class="search-filter-box">
+            <select id="dsa-filter-difficulty" class="input-select select-inline">
+              <option value="all">All Difficulties</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+            <select id="dsa-filter-status" class="input-select select-inline">
+              <option value="all">All Statuses</option>
+              <option value="Solved">Solved</option>
+              <option value="Attempted">Attempted</option>
+              <option value="Not Started">Not Started</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('add-problem-modal')">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Add Problem</span>
+          </button>
+        </div>
+
+        <!-- Full Problems Table -->
+        <div class="grid-card">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Difficulty</th>
+                  <th>Status</th>
+                  <th>Added On</th>
+                  <th class="actions-header">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="dsa-problems-tbody">
+                <tr>
+                  <td colspan="5" class="text-center text-muted">No problems tracked yet. Click "Add Problem" to log your first record!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION: NOTES ================= -->
+      <section id="section-notes" class="content-section hidden">
+        <div class="section-actions-bar">
+          <h2 class="notes-count-label">Saved Notes (<span id="notes-grid-count">0</span>)</h2>
+          <button class="btn btn-primary" onclick="openModal('add-note-modal')">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Create Note</span>
+          </button>
+        </div>
+
+        <!-- Notes grid layout -->
+        <div class="notes-grid" id="notes-cards-container">
+          <!-- Dynamically populated card elements -->
+          <div class="text-center text-muted w-100 py-5">No study notes created yet. Click "Create Note" to document a concept.</div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION: AI INTERVIEW PREP ================= -->
+      <section id="section-ai" class="content-section hidden">
+        <div class="ai-prep-panel">
+          <div class="ai-info-box">
+            <div class="ai-sparkles-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <div class="ai-description">
+              <h3>Practice with Tailored Mock Questions</h3>
+              <p>Click "Generate Interview Questions" to load a randomized set of software engineering prompts. The system maps answers in three fields: Technical Coding, Core CS Fundamentals, and Human Resources. </p>
+            </div>
+            <button id="btn-generate-ai" class="btn btn-primary-ai-sparkle">
+              <svg class="btn-icon animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg>
+              <span>Generate Questions</span>
+            </button>
+          </div>
+
+          <!-- Loader element -->
+          <div id="ai-loading-spinner" class="ai-loader-box hidden">
+            <div class="spinner"></div>
+            <p>PrepPilot AI is compiling questions... Please hold on.</p>
+          </div>
+
+          <!-- Questions results output console -->
+          <div id="ai-questions-output" class="ai-questions-grid hidden">
+            <!-- 3 Category Cards -->
+            <!-- Category: Coding -->
+            <div class="ai-category-card">
+              <div class="ai-category-header coding">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                <h4>Technical Coding</h4>
+              </div>
+              <div class="ai-category-questions" id="ai-questions-coding">
+                <!-- Dyn -->
+              </div>
+            </div>
+
+            <!-- Category: CS Fundamentals -->
+            <div class="ai-category-card">
+              <div class="ai-category-header fundamentals">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                <h4>CS Fundamentals</h4>
+              </div>
+              <div class="ai-category-questions" id="ai-questions-fundamentals">
+                <!-- Dyn -->
+              </div>
+            </div>
+
+            <!-- Category: HR -->
+            <div class="ai-category-card">
+              <div class="ai-category-header hr">
+                <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <h4>Human Resources</h4>
+              </div>
+              <div class="ai-category-questions" id="ai-questions-hr">
+                <!-- Dyn -->
+              </div>
+            </div>
+          </div>
+          
+          <div id="ai-metadata-footer" class="ai-metadata-bar hidden">
+            <span>Source: <strong id="ai-engine-source">-</strong></span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= SECTION: PROFILE ================= -->
+      <section id="section-profile" class="content-section hidden">
+        <div class="profile-details-grid">
+          <div class="grid-card">
+            <h3 class="grid-card-title">User Account Details</h3>
+            <div class="profile-form-mock">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="profile-field-name" class="input-text" readonly>
+              </div>
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="profile-field-email" class="input-text" readonly>
+              </div>
+              <div class="form-group">
+                <label>Registered Date</label>
+                <input type="text" id="profile-field-date" class="input-text" readonly value="July 2026">
+              </div>
+              <div class="profile-alert-info">
+                <p>&bull; Need to change your details? Contact the administrator or deploy your own local database console.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-card flex-center">
+            <div class="avatar-large" id="avatar-large-letters">PP</div>
+            <h4 class="profile-details-name" id="profile-large-name">Loading User...</h4>
+            <span class="badge badge-active">Standard Plan</span>
+            <p class="profile-stats-summary">
+              You have tracked <strong id="profile-total-problems">0</strong> DSA problems and created <strong id="profile-total-notes">0</strong> study cards.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= MODALS SECTION ================= -->
+
+  <!-- Modal: Add DSA Problem -->
+  <div id="add-problem-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Track New DSA Problem</h3>
+        <button class="modal-close" onclick="closeModal('add-problem-modal')">&times;</button>
+      </div>
+      <form id="add-problem-form" class="modal-form">
+        <div class="form-group">
+          <label for="problem-title">Problem Title</label>
+          <input type="text" id="problem-title" name="title" placeholder="e.g. Reverse a Linked List" required>
+        </div>
+        <div class="form-group">
+          <label for="problem-difficulty">Difficulty</label>
+          <select id="problem-difficulty" name="difficulty" required>
+            <option value="" disabled selected>Select difficulty</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="problem-status">Status</label>
+          <select id="problem-status" name="status" required>
+            <option value="Not Started">Not Started</option>
+            <option value="Attempted">Attempted</option>
+            <option value="Solved">Solved</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary-modal" onclick="closeModal('add-problem-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary-modal">Add Problem</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Edit DSA Problem -->
+  <div id="edit-problem-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit DSA Problem</h3>
+        <button class="modal-close" onclick="closeModal('edit-problem-modal')">&times;</button>
+      </div>
+      <form id="edit-problem-form" class="modal-form">
+        <!-- Hidden input to store problem ID -->
+        <input type="hidden" id="edit-problem-id">
+        
+        <div class="form-group">
+          <label for="edit-problem-title">Problem Title</label>
+          <input type="text" id="edit-problem-title" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-problem-difficulty">Difficulty</label>
+          <select id="edit-problem-difficulty" name="difficulty" required>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-problem-status">Status</label>
+          <select id="edit-problem-status" name="status" required>
+            <option value="Not Started">Not Started</option>
+            <option value="Attempted">Attempted</option>
+            <option value="Solved">Solved</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary-modal" onclick="closeModal('edit-problem-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary-modal">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add Note -->
+  <div id="add-note-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Study Note</h3>
+        <button class="modal-close" onclick="closeModal('add-note-modal')">&times;</button>
+      </div>
+      <form id="add-note-form" class="modal-form">
+        <div class="form-group">
+          <label for="note-title">Title / Concept Name</label>
+          <input type="text" id="note-title" name="title" placeholder="e.g. DFS vs BFS Space Complexity" required>
+        </div>
+        <div class="form-group">
+          <label for="note-content">Note Content (Text/Markdown)</label>
+          <textarea id="note-content" name="content" rows="6" placeholder="Document dynamic programming transitions, time constraints, or cheat sheets here..." required></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary-modal" onclick="closeModal('add-note-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary-modal">Create Note</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: View Note -->
+  <div id="view-note-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="view-note-title">Note Detail</h3>
+        <button class="modal-close" onclick="closeModal('view-note-modal')">&times;</button>
+      </div>
+      <div class="modal-body-scroll">
+        <p id="view-note-date" class="modal-note-date">Created on July 7, 2026</p>
+        <div id="view-note-content" class="modal-note-content">
+          Loading content...
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary-modal" onclick="closeModal('view-note-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/dsa.js"></script>
+  <script src="js/notes.js"></script>
+  <script src="js/ai.js"></script>
+</body>
+</html>
