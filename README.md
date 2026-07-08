@@ -22,6 +22,16 @@ Preparing for software engineering interviews often requires managing multiple f
 
 ---
 
+## 🌐 Live Demo
+
+Deployed Application:
+https://preppilot-ai-3i8u.onrender.com
+
+GitHub Repository:
+https://github.com/vaibhavi-004/PrepPilot-AI
+
+---
+
 ## ✨ Key Features
 - **Dark Mode Landing Page**: Stunning modern marketing page with glassmorphism layout, blue/purple gradient accents, and fully responsive layouts.
 - **DSA Progress Tracker**: Full CRUD operations for coding problems with status tags (Solved, Attempted, Not Started) and difficulty ratings (Easy, Medium, Hard).
@@ -38,6 +48,19 @@ Preparing for software engineering interviews often requires managing multiple f
 - **Database**: MongoDB Atlas, Mongoose ODM.
 - **Authentication**: JSON Web Tokens (JWT) stored in `localStorage`, bcryptjs password hashing.
 - **AI Integration**: OpenAI Chat Completions API (`gpt-3.5-turbo`).
+
+---
+
+## ✅ Project Status
+
+Completed and deployed full-stack application.
+
+Current features:
+- User authentication
+- DSA tracking system
+- Personal notes management
+- AI-powered interview question generation
+- Cloud database integration
 
 ---
 
@@ -173,19 +196,9 @@ Since the Express server is configured to serve the static frontend directory, y
 5. Configure the following settings:
    - **Root Directory**: `backend` (or leave blank and set Build Command to `cd backend && npm install`)
    - **Build Command**: `npm install`
-   - **Start Command**: `node server.js`
+   - **Start Command**: `npm start`
 6. Add your Environment Variables in the Render dashboard (`MONGODB_URI`, `JWT_SECRET`, `OPENAI_API_KEY`).
 7. Click **Deploy**. Your app will compile and be online!
-
-### Option B: Separate Frontend (Vercel) & Backend (Render)
-If you prefer hosting the static files on Vercel:
-1. **Backend (Render)**: Deploy the `backend/` directory as a Render Web Service. Configure environmental variables.
-2. **Frontend (Vercel)**:
-   - Open Vercel and create a new project.
-   - Point to the `frontend/` subdirectory.
-   - Deploy. The `js/config.js` script will automatically check if the hostname is different from `localhost` and dynamically seek endpoints. (Note: Make sure to update the fallback URL in `js/config.js` to point to your live Render backend endpoint!).
-
----
 
 ## 📈 Future Roadmap & Improvements
 - **Interactive Coding Console**: Integrate an online code editor (e.g. Monaco Editor) with sandboxed JavaScript execution to let candidates run test cases directly.
@@ -195,8 +208,8 @@ If you prefer hosting the static files on Vercel:
 
 ---
 
-## 📸 Screenshots (Placeholders)
+<!-- ## 📸 Screenshots (Placeholders)
 *Feel free to attach real application screenshots here to boost visual appeal on GitHub!*
 - **Landing Page**: `assets/landing_preview.png`
 - **Dashboard Workspace**: `assets/dashboard_preview.png`
-- **AI Interview Assistant Panel**: `assets/ai_prep_preview.png`
+- **AI Interview Assistant Panel**: `assets/ai_prep_preview.png` -->
